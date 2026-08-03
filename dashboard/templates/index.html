@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Automation</title>
+</head>
+
+<body>
+
+<h1>Job Automation Dashboard</h1>
+
+<hr>
+
+{% for job in jobs %}
+
+<h3>{{ job.title }}</h3>
+
+<p>{{ job.company }}</p>
+
+<p>{{ job.location }}</p>
+
+<p>{{ job.salary }}</p>
+
+<a href="{{ job.url }}">Open Job</a>
+
+<hr>
+
+{% endfor %}
+
+</body>
+</html>
