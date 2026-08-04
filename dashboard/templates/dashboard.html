@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<section class="search-section">
+
+    <h2>Find Your Next Opportunity</h2>
+
+    <form method="POST" action="/search">
+
+        <input 
+        type="text"
+        name="keyword"
+        placeholder="Search jobs e.g. IT Support">
+        
+        <button>
+            Search
+        </button>
+
+    </form>
+
+</section>
+
+
+
+<section class="stats">
+
+
+    <div class="card">
+        <h3>Jobs Found</h3>
+        <p>0</p>
+    </div>
+
+
+    <div class="card">
+        <h3>Applied</h3>
+        <p>0</p>
+    </div>
+
+
+    <div class="card">
+        <h3>Interviews</h3>
+        <p>0</p>
+    </div>
+
+
+    <div class="card">
+        <h3>Average Match</h3>
+        <p>0%</p>
+    </div>
+
+
+</section>
+
+
+
+<section>
+
+<h2>Recent Jobs</h2>
+
+
+<div class="jobs">
+
+
+    {% for job in jobs %}
+
+        {% include "job_card.html" %}
+
+    {% else %}
+
+        <p>No jobs available yet.</p>
+
+    {% endfor %}
+
+
+</div>
+
+
+</section>
+
+
+
+{% endblock %}

@@ -1,25 +1,21 @@
-from sqlalchemy.orm import Session
 from models.job import Job
 
 
 class JobRepository:
 
+
     @staticmethod
-    def add_job(db: Session, job_data: dict):
-
-        existing = db.query(Job).filter(Job.url == job_data["url"]).first()
-
-        if existing:
-            return False
-
-        job = Job(**job_data)
+    def add_job(db, job):
 
         db.add(job)
         db.commit()
+        db.refresh(job)
 
-        return True
+        return job
+
+
 
     @staticmethod
-    def get_all_jobs(db: Session):
+    def get_all(db):
 
         return db.query(Job).all()
