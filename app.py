@@ -1,20 +1,14 @@
 from database.database import Base, SessionLocal, engine
-from database.job_rep import JobRepository
 from models.job import Job
 from scrapers.demo_scraper import DemoScraper
+from services.search_service import SearchService
 
 Base.metadata.create_all(bind=engine)
 
 db = SessionLocal()
 
-scraper = DemoScraper()
+service = SearchService(DemoScraper())
 
-jobs = scraper.search("IT Support")
+added = service.search("IT Support", db)
 
-for job in jobs:
-    JobRepository.add_job(db, job)
-
-print("Jobs currently in the database:\n")
-
-for job in JobRepository.get_all_jobs(db):
-    print(f"{job.title} | {job.company} | {job.location}")
+print(f"{added} new jobs added.")
