@@ -22,21 +22,18 @@
 
 {% if jobs %}
     {% for job in jobs %}
-<div class="job-card">
 
     <h3>{{ job.title }}</h3>
 
-    <p><b>Company:</b> {{ job.company }}</p>
+    <p>{{ job.company }}</p>
 
-    <p><b>Location:</b> {{ job.location }}</p>
+    <p>{{ job.location }}</p>
 
-    <p><b>Salary:</b> {{ job.salary }}</p>
+    <p>{{ job.salary }}</p>
 
-    <a href="{{ job.url }}" target="_blank">
-        Open Job
-    </a>
+    <a href="{{ job.url }}">Open Job</a>
 
-</div>
+    <hr>
 
     {% endfor %}
 {% else %}
