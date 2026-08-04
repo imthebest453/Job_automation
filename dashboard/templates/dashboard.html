@@ -10,19 +10,28 @@ Dashboard
 {% block content %}
 
 
-<section>
 
-<h2>
-Find Your Next Opportunity
-</h2>
+<section class="hero">
+
+
+<h1>
+Find your next IT opportunity
+</h1>
+
+
+<p>
+Automate your job search and track applications
+</p>
+
 
 
 <form method="POST" action="/search">
 
+
 <input 
 type="text"
 name="keyword"
-placeholder="Search job roles..."
+placeholder="Search IT Support, Cybersecurity..."
 required
 >
 
@@ -40,23 +49,25 @@ Search
 
 
 
+
 <section class="stats">
 
 
-<div class="card">
+<div class="stat-card">
 
 <h3>
 Jobs Found
 </h3>
 
 <p>
-0
+{{ jobs|length }}
 </p>
 
 </div>
 
 
-<div class="card">
+
+<div class="stat-card">
 
 <h3>
 Applied
@@ -69,7 +80,8 @@ Applied
 </div>
 
 
-<div class="card">
+
+<div class="stat-card">
 
 <h3>
 Interviews
@@ -82,10 +94,11 @@ Interviews
 </div>
 
 
-<div class="card">
+
+<div class="stat-card">
 
 <h3>
-Average Match
+Match Score
 </h3>
 
 <p>
@@ -99,8 +112,10 @@ Average Match
 
 
 
-<h2>
-Recent Jobs
+
+
+<h2 class="section-title">
+Latest Jobs
 </h2>
 
 
@@ -110,13 +125,16 @@ Recent Jobs
 
 {% for job in jobs %}
 
+
 {% include "job_card.html" %}
+
 
 
 {% else %}
 
+
 <p>
-No jobs available yet.
+No jobs available.
 </p>
 
 

@@ -7,13 +7,16 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 {% block title %}
-Job Automation
+JobFlow
 {% endblock %}
 </title>
 
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 
 </head>
 
@@ -23,9 +26,11 @@ Job Automation
 
 <nav class="navbar">
 
+
 <div class="logo">
-    Job<span>Flow</span>
+Job<span>Flow</span>
 </div>
+
 
 
 <div class="nav-links">
@@ -34,31 +39,38 @@ Job Automation
 Dashboard
 </a>
 
-
 <a href="#">
 Applications
 </a>
 
-
 <a href="#">
-Settings
+Profile
 </a>
+
+
+<button id="theme-toggle" class="theme-btn">
+🌙
+</button>
 
 
 </div>
 
+
 </nav>
 
 
+
 <div class="container">
+
 
 {% block content %}
 
 {% endblock %}
 
+
 </div>
 
-
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 
 </html>

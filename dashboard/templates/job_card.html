@@ -1,9 +1,20 @@
 <div class="job-card">
 
 
+<div class="job-header">
+
 <h3>
 {{ job.title }}
 </h3>
+
+
+<span>
+{{ job.source }}
+</span>
+
+
+</div>
+
 
 
 <p>
@@ -11,9 +22,11 @@
 </p>
 
 
+
 <p>
 📍 {{ job.location }}
 </p>
+
 
 
 <p>
@@ -21,32 +34,37 @@
 </p>
 
 
-<div class="match">
 
-Match:
-{{ job.match_score | default(0) }}%
+<p class="description">
 
-</div>
+{{ job.description }}
 
+</p>
+
+
+
+
+<div class="actions">
 
 
 <a 
 href="{{ job.url }}"
 target="_blank"
-class="button"
->
+class="primary-btn">
 
 View Job
 
 </a>
 
 
-
-<button class="button secondary">
+<button class="secondary-btn">
 
 Track
 
 </button>
+
+
+</div>
 
 
 </div>
