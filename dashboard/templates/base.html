@@ -1,44 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Job Automation</title>
-     <link rel="stylesheet" href="/static/style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Job Automation
+        {% endblock %}
+    </title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
-<h1>Job Automation Dashboard</h1>
 
-<form method="POST" action="/search">
-    <input type="text" name="keyword" placeholder="Search job roles..." required>
-    <button type="submit">Search</button>
-</form>
+<nav class="navbar">
 
-{% if keyword %}
-    <p>Search results for "<strong>{{ keyword }}</strong>"</p>
-{% endif %}
+    <div class="logo">
+        Job<span>Flow</span>
+    </div>
 
-<hr>
 
-{% if jobs %}
-    {% for job in jobs %}
+    <div class="nav-links">
 
-    <h3>{{ job.title }}</h3>
+        <a href="/">
+            Dashboard
+        </a>
 
-    <p>{{ job.company }}</p>
+        <a href="#">
+            Applications
+        </a>
 
-    <p>{{ job.location }}</p>
+        <a href="#">
+            Settings
+        </a>
 
-    <p>{{ job.salary }}</p>
+    </div>
 
-    <a href="{{ job.url }}">Open Job</a>
+</nav>
 
-    <hr>
 
-    {% endfor %}
-{% else %}
-    <p>No jobs found.</p>
-{% endif %}
+
+<main class="container">
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</main>
+
+
 
 </body>
+
 </html>
