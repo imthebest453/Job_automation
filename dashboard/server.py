@@ -1,47 +1,34 @@
-from flask import Flask, render_template,  request,  redirect
+from flask import Flask, render_template, request, redirect
 
 from database.database import SessionLocal
 from database.job_rep import JobRepository
-from scrapers.demo_scraper import DemoScraper
-from services.search_service import SearchService
 
 app = Flask(__name__)
 
-
 @app.route("/")
-def dashboard():
+def home():
 
     db = SessionLocal()
 
-    try:
-        jobs = JobRepository.get_all(db)
+    jobs = JobRepository.get_all_jobs(db)
 
-        return render_template(
-            "dashboard.html",
-            jobs=jobs
-        )
+    return render_template("base.html", jobs=jobs)
 
-    finally:
-        db.close()
 
 @app.post("/search")
 def search_jobs():
-
-    keyword = request.form.get("keyword")
-
+    
+    keyword = request.form.get("keyword", "").strip()
+    
+    if not keyword:
+        return redirect("/")
+    
     db = SessionLocal()
+    
+    jobs = JobRepository.search_jobs(db, keyword)
+    
+    return render_template("base.html", jobs=jobs, keyword=keyword)
 
-    try:
-
-        service = SearchService(DemoScraper())
-
-        service.search(keyword, db)
-
-    finally:
-        db.close()
-
-
-    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)

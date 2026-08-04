@@ -15,3 +15,4 @@ class SearchService:
                 added += 1
 
         return added
+    

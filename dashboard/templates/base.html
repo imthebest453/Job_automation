@@ -1,44 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>
-        {% block title %}
-        AI Job Automation
-        {% endblock %}
-    </title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+    <title>Job Automation</title>
+     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
 
-    <nav class="navbar">
-        <h1>🤖 AI Job Automation</h1>
+<h1>Job Automation Dashboard</h1>
 
-        <div class="nav-links">
-            <a href="/">Dashboard</a>
-            <a href="#">Applications</a>
-            <a href="#">Settings</a>
-        </div>
-    </nav>
+<form method="POST" action="/search">
+    <input type="text" name="keyword" placeholder="Search job roles..." required>
+    <button type="submit">Search</button>
+</form>
 
+{% if keyword %}
+    <p>Search results for "<strong>{{ keyword }}</strong>"</p>
+{% endif %}
 
-    <main class="container">
+<hr>
 
-        {% block content %}
+{% if jobs %}
+    {% for job in jobs %}
+<div class="job-card">
 
-        {% endblock %}
+    <h3>{{ job.title }}</h3>
 
-    </main>
+    <p><b>Company:</b> {{ job.company }}</p>
 
+    <p><b>Location:</b> {{ job.location }}</p>
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <p><b>Salary:</b> {{ job.salary }}</p>
+
+    <a href="{{ job.url }}" target="_blank">
+        Open Job
+    </a>
+
+</div>
+
+    {% endfor %}
+{% else %}
+    <p>No jobs found.</p>
+{% endif %}
 
 </body>
-
 </html>
