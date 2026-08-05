@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect
 
-from database.database import SessionLocal
+from database.database import SessionLocal, init_db
 from database.job_rep import JobRepository
+
+init_db()
 
 app = Flask(
     __name__,

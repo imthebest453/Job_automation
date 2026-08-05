@@ -5,14 +5,12 @@ from models.job import Job
 class JobRepository:
 
     @staticmethod
-    def add_job(db: Session, job_data: dict):
+    def add_job(db: Session, job):
 
-        existing = db.query(Job).filter(Job.url == job_data["url"]).first()
+        existing = db.query(Job).filter(Job.url == job.url).first()
 
         if existing:
             return False
-
-        job = Job(**job_data)
 
         db.add(job)
         db.commit()
