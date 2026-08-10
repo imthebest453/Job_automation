@@ -7,7 +7,9 @@ class JobRepository:
     @staticmethod
     def add_job(db: Session, job):
 
-        existing = db.query(Job).filter(Job.url == job.url).first()
+        existing = db.query(Job).filter(
+            Job.url == job.url
+        ).first()
 
         if existing:
             return False
@@ -24,8 +26,31 @@ class JobRepository:
 
     @staticmethod
     def search_jobs(db: Session, keyword: str):
-        
+
         return db.query(Job).filter(
             (Job.title.ilike(f"%{keyword}%")) |
             (Job.company.ilike(f"%{keyword}%"))
+        ).all()
+
+    @staticmethod
+    def update_status(db: Session, job_id: int, status: str):
+
+        job = db.query(Job).filter(
+            Job.id == job_id
+        ).first()
+
+        if not job:
+            return False
+
+        job.status = status
+
+        db.commit()
+
+        return True
+
+    @staticmethod
+    def get_applied_jobs(db: Session):
+
+        return db.query(Job).filter(
+            Job.status == "Applied"
         ).all()

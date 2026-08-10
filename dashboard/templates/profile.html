@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile - JobFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1>Application Profile</h1>
+
+    <p>
+        Enter your information once.
+        JobFlow will use it when completing applications.
+    </p>
+
+    <form method="POST" action="/profile">
+
+        <input
+            type="text"
+            name="full_name"
+            placeholder="Full name"
+            required
+        >
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+        >
+
+        <input
+            type="text"
+            name="phone"
+            placeholder="Phone number"
+        >
+
+        <input
+            type="text"
+            name="address"
+            placeholder="Address"
+        >
+
+        <input
+            type="text"
+            name="city"
+            placeholder="City"
+        >
+
+        <input
+            type="text"
+            name="postcode"
+            placeholder="Postcode"
+        >
+
+        <textarea
+            name="skills"
+            placeholder="Skills"
+        ></textarea>
+
+        <textarea
+            name="experience"
+            placeholder="Work experience"
+        ></textarea>
+
+        <textarea
+            name="education"
+            placeholder="Education"
+        ></textarea>
+
+        <button type="submit">
+            Save Profile
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
