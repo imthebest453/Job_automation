@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Applications
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>My Applications</h2>
+    <p>Track the jobs you have applied for.</p>
+</div>
+
+<div class="jobs">
+
+    {% for job in jobs %}
+
+        <div class="job-card">
+
+            <h3>{{ job.title }}</h3>
+
+            <p>🏢 {{ job.company }}</p>
+
+            <p>📍 {{ job.location }}</p>
+
+            <p>💰 {{ job.salary }}</p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ job.status }}
+            </p>
+
+            <a
+                href="{{ job.url }}"
+                target="_blank"
+                class="button"
+            >
+                View Job
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <p>You haven't applied for any jobs yet.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

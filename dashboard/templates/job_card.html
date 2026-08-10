@@ -1,33 +1,32 @@
 <div class="job-card">
 
-    <h3>
-        {{ job.title }}
-    </h3>
+    <h3>{{ job.title }}</h3>
 
+    <p>🏢 {{ job.company }}</p>
 
-    <p>
-        🏢 {{ job.company }}
-    </p>
+    <p>📍 {{ job.location }}</p>
 
+    {% if job.salary %}
+        <p>💰 {{ job.salary }}</p>
+    {% endif %}
 
-    <p>
-        📍 {{ job.location }}
-    </p>
+    {% if job.description %}
+        <p>{{ job.description }}</p>
+    {% endif %}
 
+    <div class="job-actions">
 
-    <div class="match">
-        Match: {{ job.match_score | default(0) }}%
+        <a href="{{ job.url }}"
+           target="_blank"
+           class="button">
+            View Job
+        </a>
+
+        <a href="/apply/{{ job.id }}"
+           class="button apply-button">
+            🚀 Apply
+        </a>
+
     </div>
-
-
-    <button>
-        View Job
-    </button>
-
-
-    <button>
-        Track
-    </button>
-
 
 </div>

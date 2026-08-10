@@ -10,81 +10,138 @@ Dashboard
 {% block content %}
 
 
-<section class="search-section">
 
-    <h2>Find Your Next Opportunity</h2>
+<section class="hero">
 
-    <form method="POST" action="/search">
 
-        <input 
-        type="text"
-        name="keyword"
-        placeholder="Search jobs e.g. IT Support">
-        
-        <button>
-            Search
-        </button>
+<h1>
+Find your next IT opportunity
+</h1>
 
-    </form>
+
+<p>
+Automate your job search and track applications
+</p>
+
+
+
+<form method="POST" action="/search">
+
+
+<input 
+type="text"
+name="keyword"
+placeholder="Search IT Support, Cybersecurity..."
+required
+>
+
+
+<button>
+Search
+</button>
+
+
+</form>
+
 
 </section>
+
+
 
 
 
 <section class="stats">
 
 
-    <div class="card">
-        <h3>Jobs Found</h3>
-        <p>0</p>
-    </div>
+<div class="stat-card">
 
+<h3>
+Jobs Found
+</h3>
 
-    <div class="card">
-        <h3>Applied</h3>
-        <p>0</p>
-    </div>
+<p>
+{{ jobs|length }}
+</p>
 
-
-    <div class="card">
-        <h3>Interviews</h3>
-        <p>0</p>
-    </div>
-
-
-    <div class="card">
-        <h3>Average Match</h3>
-        <p>0%</p>
-    </div>
-
-
-</section>
+</div>
 
 
 
-<section>
+<div class="stat-card">
 
-<h2>Recent Jobs</h2>
+<h3>
+Applied
+</h3>
+
+<p>
+0
+</p>
+
+</div>
 
 
-<div class="jobs">
+
+<div class="stat-card">
+
+<h3>
+Interviews
+</h3>
+
+<p>
+0
+</p>
+
+</div>
 
 
-    {% for job in jobs %}
 
-        {% include "job_card.html" %}
+<div class="stat-card">
 
-    {% else %}
+<h3>
+Match Score
+</h3>
 
-        <p>No jobs available yet.</p>
-
-    {% endfor %}
-
+<p>
+0%
+</p>
 
 </div>
 
 
 </section>
+
+
+
+
+
+<h2 class="section-title">
+Latest Jobs
+</h2>
+
+
+
+<div class="jobs">
+
+
+{% for job in jobs %}
+
+
+{% include "job_card.html" %}
+
+
+
+{% else %}
+
+
+<p>
+No jobs available.
+</p>
+
+
+{% endfor %}
+
+
+</div>
 
 
 

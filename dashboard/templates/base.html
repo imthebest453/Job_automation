@@ -2,43 +2,75 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        {% block title %}
-        AI Job Automation
-        {% endblock %}
-    </title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+{% block title %}
+JobFlow
+{% endblock %}
+</title>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 
 </head>
 
+
 <body>
 
-    <nav class="navbar">
-        <h1>🤖 AI Job Automation</h1>
 
-        <div class="nav-links">
-            <a href="/">Dashboard</a>
-            <a href="#">Applications</a>
-            <a href="#">Settings</a>
-        </div>
-    </nav>
+<nav class="navbar">
 
 
-    <main class="container">
-
-        {% block content %}
-
-        {% endblock %}
-
-    </main>
+<div class="logo">
+Job<span>Flow</span>
+</div>
 
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
+<div class="nav-links">
+
+<a href="/">
+Dashboard
+</a>
+
+<a href="/applications">
+Applications
+</a>
+
+<a href="/profile">
+Profile
+</a>
+
+
+<button id="theme-toggle" class="theme-btn">
+🌙
+</button>
+
+
+</div>
+
+
+</nav>
+
+
+
+<div class="container">
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 
 </html>
