@@ -1,46 +1,82 @@
-from playwright.sync_api import sync_playwright
+def start_application(url, job_id=None):
 
-from database.database import SessionLocal
-from models.application_profile import ApplicationProfile
-from automation.form_filler import fill_application
+    def _run_application():
+        db = SessionLocal()
 
+        try:
+            profile = db.query(ApplicationProfile).first()
 
-def start_application(url):
+            if not profile:
+                print("No application profile found.")
+                return
 
-    db = SessionLocal()
+            with sync_playwright() as p:
 
-    profile = db.query(ApplicationProfile).first()
+                browser = p.chromium.launch(
+                    headless=False
+                )
 
-    if not profile:
-        print("No application profile found.")
-        return
+                page = browser.new_page()
 
-    with sync_playwright() as p:
+                page.goto(
+                    url,
+                    wait_until="domcontentloaded"
+                )
 
-        browser = p.chromium.launch(
-            headless=False
-        )
+                print("Application page opened:")
+                print(page.title())
 
-        page = browser.new_page()
+                fill_application(
+                    page,
+                    profile
+                )
 
-        page.goto(
-            url,
-            wait_until="domcontentloaded"
-        )
+                print("Profile information filled.")
 
-        print("Application page opened:")
-        print(page.title())
+                # Allow user to review the filled form before closing
+                # Use a non-blocking approach - just wait a bit then prompt
+                import threading
+                import time
 
-        fill_application(
-            page,
-            profile
-        )
+                review_event = threading.Event()
 
-        print("Basic profile information filled.")
+                def wait_for_review():
+                    """Wait for user to press Enter in console."""
+                    try:
+                        input(
+                            "Review the application. "
+                            "Press ENTER to close the browser..."
+                        )
+                        review_event.set()
+                    except (EOFError, KeyboardInterrupt):
+                        review_event.set()
 
-        input(
-            "Review the application. "
-            "Press ENTER to close the browser..."
-        )
+                # Start input watcher in background thread
+                reviewer_thread = threading.Thread(target=wait_for_review, daemon=True)
+                reviewer_thread.start()
 
-        browser.close()
+                # Wait for review or timeout after 30 seconds
+                review_done = review_event.wait(timeout=30)
+
+                if not review_done:
+                    print("Review timeout - closing browser anyway.")
+
+                browser.close()
+
+            # Update job status to "Applied" after browser closes
+            # Create a new session since the original one may be detached
+            db_status = SessionLocal()
+            try:
+                from database.job_rep import JobRepository
+                JobRepository.update_status(db_status, job_id, "Applied")
+                print(f"Job status updated to Applied (job_id: {job_id})")
+            finally:
+                db_status.close()
+
+        finally:
+            db.close()
+
+    # Run in background thread so Flask server remains responsive
+    thread = threading.Thread(target=_run_application, daemon=True)
+    thread.start()
+    print("Application automation started in background thread.")

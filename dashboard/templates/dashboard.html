@@ -6,16 +6,14 @@ Dashboard
 {% endblock %}
 
 
-
 {% block content %}
-
 
 
 <section class="hero">
 
 
 <h1>
-Find your next IT opportunity
+Find your next opportunity
 </h1>
 
 
@@ -24,11 +22,10 @@ Automate your job search and track applications
 </p>
 
 
+<form method="POST" action="/search" class="search-form">
 
-<form method="POST" action="/search">
 
-
-<input 
+<input
 type="text"
 name="keyword"
 placeholder="Search IT Support, Cybersecurity..."
@@ -36,7 +33,7 @@ required
 >
 
 
-<button>
+<button type="submit">
 Search
 </button>
 
@@ -47,13 +44,11 @@ Search
 </section>
 
 
-
-
-
 <section class="stats">
 
 
 <div class="stat-card">
+
 
 <h3>
 Jobs Found
@@ -63,25 +58,31 @@ Jobs Found
 {{ jobs|length }}
 </p>
 
+
 </div>
 
 
-
 <div class="stat-card">
+
 
 <h3>
 Applied
 </h3>
 
 <p>
+{% if applied_jobs is defined %}
+{{ applied_jobs|length }}
+{% else %}
 0
+{% endif %}
 </p>
+
 
 </div>
 
 
-
 <div class="stat-card">
+
 
 <h3>
 Interviews
@@ -91,18 +92,23 @@ Interviews
 0
 </p>
 
-</div>
 
+</div>
 
 
 <div class="stat-card">
 
+
 <h3>
-Match Score
+Best Match
 </h3>
 
 <p>
+{% if suitable_jobs and suitable_jobs|length > 0 %}
+{{ suitable_jobs[0].suitability_score }}% match
+{% else %}
 0%
+{% endif %}
 </p>
 
 </div>
@@ -111,13 +117,95 @@ Match Score
 </section>
 
 
+<h2 class="section-title">
+Recommended Opportunities
+</h2>
 
+
+{% if suitable_jobs is defined and suitable_jobs|length > 0 %}
+
+
+<div class="jobs recommended-jobs">
+
+
+{% for job in suitable_jobs %}
+
+
+<div class="job-card recommended-card">
+
+
+<h3 class="job-title">
+{{ job.title }}
+</h3>
+
+<p class="job-company">
+🏢 {{ job.company }}
+</p>
+
+<p class="job-location">
+📍 {{ job.location }}
+</p>
+
+{% if job.salary %}
+<p class="job-salary">
+💰 {{ job.salary }}
+</p>
+{% endif %}
+
+{% if job.suitability_score is defined and job.suitability_score > 0 %}
+<p class="suitability-score">
+Match: {{ job.suitability_score }}%
+</p>
+{% endif %}
+
+{% if job.missing_requirements %}
+<p class="missing-requirements-small">
+{{ job.missing_requirements|first }}
+</p>
+{% endif %}
+
+
+<div class="job-actions">
+
+
+<a
+href="{{ job.url }}"
+target="_blank"
+class="button view-button">
+👁️ View Job
+</a>
+
+<form method="POST" action="/apply/{{ job.id }}" style="display:inline;">
+  <button type="submit" class="button apply-btn">
+    📝 Prepare Application
+  </button>
+</form>
+
+
+</div>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</div>
+
+
+{% else %}
+
+
+<p>No suitable opportunities at this time. Try adjusting your search preferences.</p>
+
+
+{% endif %}
 
 
 <h2 class="section-title">
 Latest Jobs
 </h2>
-
 
 
 <div class="jobs">
@@ -129,20 +217,16 @@ Latest Jobs
 {% include "job_card.html" %}
 
 
-
 {% else %}
 
 
-<p>
-No jobs available.
-</p>
+<p>No jobs available.</p>
 
 
 {% endfor %}
 
 
 </div>
-
 
 
 {% endblock %}

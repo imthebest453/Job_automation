@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Text
 from database.database import Base
 
 
@@ -15,13 +15,37 @@ class Job(Base):
     salary = Column(String)
 
     url = Column(String, unique=True, nullable=False)
-
     source = Column(String)
     description = Column(String)
 
-    status = Column(String, default="Saved")
+    # Status tracking with explicit choices
+    STATUS_CHOICES = [
+        "Saved",
+        "Viewed",
+        "Preparing",
+        "Applied",
+        "Confirmation Needed",
+        "Interview",
+        "Rejected",
+        "Offer",
+        "Withdrawn",
+    ]
+
+    status = Column(
+        String,
+        default="Saved",
+    )
 
     date_found = Column(DateTime, default=datetime.utcnow)
     date_applied = Column(DateTime, nullable=True)
+    date_status_changed = Column(DateTime, default=datetime.utcnow)
 
     notes = Column(String, nullable=True)
+
+    # Application tracking
+    application_count = Column(Integer, default=0)
+
+    # Suitability scoring
+    suitability_score = Column(Integer, default=0)  # 0-100
+    suitability_factors = Column(Text, default="")  # JSON breakdown of match factors
+    missing_requirements = Column(Text, default="")  # JSON list of mandatory reqs not met

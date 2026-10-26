@@ -1,81 +1,145 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 Profile - JobFlow
 {% endblock %}
 
+
 {% block content %}
+
 
 <div class="profile-page">
 
-    <h1>Application Profile</h1>
 
-    <p>
-        Enter your information once.
-        JobFlow will use it when completing applications.
-    </p>
+<h1>Application Profile</h1>
 
-    <form method="POST" action="/profile">
+<p>
+Enter your information once. JobFlow will use it when completing applications.
+</p>
 
-        <input
-            type="text"
-            name="full_name"
-            placeholder="Full name"
-            required
-        >
 
-        <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-        >
+<form method="POST" action="/profile" enctype="multipart/form-data">
 
-        <input
-            type="text"
-            name="phone"
-            placeholder="Phone number"
-        >
 
-        <input
-            type="text"
-            name="address"
-            placeholder="Address"
-        >
+<div class="form-group">
+  <label for="full_name">Full Name</label>
+  <input
+    type="text"
+    id="full_name"
+    name="full_name"
+    placeholder="Full name"
+    value="{{ profile.full_name if profile else '' }}"
+    required
+  >
+</div>
 
-        <input
-            type="text"
-            name="city"
-            placeholder="City"
-        >
 
-        <input
-            type="text"
-            name="postcode"
-            placeholder="Postcode"
-        >
+<div class="form-group">
+  <label for="email">Email</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="Email"
+    value="{{ profile.email if profile else '' }}"
+    required
+  >
+</div>
 
-        <textarea
-            name="skills"
-            placeholder="Skills"
-        ></textarea>
 
-        <textarea
-            name="experience"
-            placeholder="Work experience"
-        ></textarea>
+<div class="form-group">
+  <label for="phone">Phone</label>
+  <input
+    type="text"
+    id="phone"
+    name="phone"
+    placeholder="Phone number"
+    value="{{ profile.phone if profile else '' }}"
+  >
+</div>
 
-        <textarea
-            name="education"
-            placeholder="Education"
-        ></textarea>
 
-        <button type="submit">
-            Save Profile
-        </button>
+<div class="form-group">
+  <label for="address">Address</label>
+  <input
+    type="text"
+    id="address"
+    name="address"
+    placeholder="Address"
+    value="{{ profile.address if profile else '' }}"
+  >
+</div>
 
-    </form>
+
+<div class="form-group">
+  <label for="city">City</label>
+  <input
+    type="text"
+    id="city"
+    name="city"
+    placeholder="City"
+    value="{{ profile.city if profile else '' }}"
+  >
+</div>
+
+
+<div class="form-group">
+  <label for="postcode">Postcode</label>
+  <input
+    type="text"
+    id="postcode"
+    name="postcode"
+    placeholder="Postcode"
+    value="{{ profile.postcode if profile else '' }}"
+  >
+</div>
+
+
+<br>
+
+
+<label for="cv">CV</label>
+
+<input
+type="file"
+id="cv"
+name="cv"
+accept=".pdf,.doc,.docx"
+>
+<br><br>
+
+
+<textarea
+name="skills"
+placeholder="Skills"
+>{{ profile.skills if profile else '' }}</textarea>
+
+
+<textarea
+name="experience"
+placeholder="Work experience"
+>{{ profile.experience if profile else '' }}</textarea>
+
+
+<textarea
+name="education"
+placeholder="Education"
+>{{ profile.education if profile else '' }}</textarea>
+
+
+<br>
+
+
+<button type="submit">
+Save Profile
+</button>
+
+
+</form>
+
 
 </div>
+
 
 {% endblock %}
