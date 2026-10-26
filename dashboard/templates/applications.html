@@ -1,51 +1,73 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 Applications
 {% endblock %}
 
+
 {% block content %}
 
+
 <div class="page-header">
-    <h2>My Applications</h2>
-    <p>Track the jobs you have applied for.</p>
+<h2>My Applications</h2>
+<p>Track the jobs you have applied for.</p>
 </div>
+
 
 <div class="jobs">
 
-    {% for job in jobs %}
 
-        <div class="job-card">
+{% if jobs %}
+{% for job in jobs %}
 
-            <h3>{{ job.title }}</h3>
 
-            <p>🏢 {{ job.company }}</p>
+<div class="job-card application-card">
 
-            <p>📍 {{ job.location }}</p>
 
-            <p>💰 {{ job.salary }}</p>
+<h3 class="application-title">
+{{ job.title }}
+</h3>
 
-            <p>
-                <strong>Status:</strong>
-                {{ job.status }}
-            </p>
+<p class="application-company">
+🏢 {{ job.company }}
+</p>
 
-            <a
-                href="{{ job.url }}"
-                target="_blank"
-                class="button"
-            >
-                View Job
-            </a>
+<p class="application-location">
+📍 {{ job.location }}
+</p>
 
-        </div>
+<p class="application-salary">
+💰 {{ job.salary }}
+</p>
 
-    {% else %}
+<p class="application-status">
+<strong>Status:</strong> {{ job.status }}
+</p>
 
-        <p>You haven't applied for any jobs yet.</p>
 
-    {% endfor %}
+<a
+href="{{ job.url }}"
+target="_blank"
+class="button view-button">
+👁️ View Job
+</a>
+
 
 </div>
+
+
+{% endfor %}
+{% else %}
+
+
+<p>You haven't applied for any jobs yet.</p>
+
+
+{% endif %}
+
+
+</div>
+
 
 {% endblock %}
